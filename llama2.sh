@@ -1,0 +1,12 @@
+python3 trainer.py \
+    --dataset_name wikitext \
+    --dataset_config_name wikitext-2-raw-v1 \
+    --model_type llama \
+    --tokenizer_name meta-llama/Llama-2-7b-hf \
+    --per_device_train_batch_size 1 \
+    --per_device_eval_batch_size 1 \
+    --num_train_epochs 10 \
+    --checkpointing_steps 5 \
+    --max_train_steps 10 \
+    --with_tracking \
+    --output_dir ./tmp

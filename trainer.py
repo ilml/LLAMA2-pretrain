@@ -435,6 +435,9 @@ def main():
     # Main data processing function that will concatenate all texts from our dataset and generate chunks of block_size.
     def group_texts(examples):
         # Concatenate all texts.
+        print("group_texts")
+        print("examples")
+        print(examples)
         concatenated_examples = {k: list(chain(*examples[k])) for k in examples.keys()}
         total_length = len(concatenated_examples[list(examples.keys())[0]])
         # We drop the small remainder, and if the total_length < block_size  we exclude this batch and return an empty dict.
@@ -446,6 +449,8 @@ def main():
             for k, t in concatenated_examples.items()
         }
         result["labels"] = result["input_ids"].copy()
+        print("results")
+        print(result)
         return result
 
     # Note that with `batched=True`, this map processes 1,000 texts together, so group_texts throws away a remainder
@@ -469,8 +474,10 @@ def main():
 
     # Log a few random samples from the training set:
     # for index in random.sample(range(len(train_dataset)), 3):
+    # for index in range(4):
     #    logger.info(f"Sample {index} of the training set: {train_dataset[index]}.")
-
+    print("total raw dataset:", len(raw_datasets["train"]))
+    print("total train_dataset:", len(train_dataset))
     # DataLoaders creation:
     train_dataloader = DataLoader(
         train_dataset, shuffle=True, collate_fn=default_data_collator, batch_size=args.per_device_train_batch_size
@@ -591,6 +598,8 @@ def main():
             active_dataloader = train_dataloader
         for step, batch in enumerate(active_dataloader):
             with accelerator.accumulate(model):
+                print(list(model.forward.__annotations__.keys()))
+                print(tokenizer.model_input_names)
                 outputs = model(**batch)
                 loss = outputs.loss
                 # We keep track of the loss at each epoch

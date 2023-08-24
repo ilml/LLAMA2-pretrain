@@ -1,3 +1,4 @@
+#python3  run_clm.py \
 deepspeed --num_gpus=1  run_clm.py \
     --model_type gpt2 \
     --tokenizer_name gpt2 \
@@ -11,4 +12,4 @@ deepspeed --num_gpus=1  run_clm.py \
     --output_dir ./tmp \
     --overwrite_output_dir true\
     --deepspeed ds_config.json \
-    --bf16 true 
+    --fp16 true 
